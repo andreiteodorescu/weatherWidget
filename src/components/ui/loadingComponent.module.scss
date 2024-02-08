@@ -1,0 +1,23 @@
+@use '../../styles/abstracts/functions' as *;
+
+.spinner {
+    border: rem(4px) solid rgba(0, 0, 0, .1);
+    border-left-color: #333;
+    border-radius: 50%;
+    width: rem(30px);
+    height: rem(30px);
+    animation: spin 1s linear infinite;
+}
+  
+@keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+}
+
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

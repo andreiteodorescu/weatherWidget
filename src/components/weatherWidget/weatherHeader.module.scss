@@ -1,0 +1,14 @@
+@use '../../styles/abstracts/functions' as *;
+
+.weatherWidgetHeadingLocation {
+    text-transform: uppercase;
+    font-size: rem(24px);
+    text-align: center;
+
+    span {
+        font-size: rem(16px);
+        text-transform: capitalize;
+        line-height: 1;
+        display: block;
+    }
+}

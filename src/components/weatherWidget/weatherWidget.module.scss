@@ -1,0 +1,11 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/functions' as *;
+
+.weatherWidget {
+    max-width: rem(500);
+    background-color: $ww-bg;
+    border-radius: rem(5px);
+    padding: rem(10px);
+    display: grid;
+    gap: rem(10px);
+}

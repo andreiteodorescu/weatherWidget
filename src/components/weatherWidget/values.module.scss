@@ -1,0 +1,30 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/functions' as *;
+
+.weatherWidgetValues {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: rem(10px);
+    container: weather-values / inline-size;
+
+    li {
+        padding: rem(10px);
+
+        span {
+            text-transform: uppercase;
+            color: $medium-grey;
+            margin-right: rem(7px);
+        }
+    }
+}
+
+@container weather-values (inline-size < 350px) {
+    .weatherWidgetValues {
+        li {
+            span {
+                display: block;
+                margin-right: 0;
+            }
+        }
+    }
+}
