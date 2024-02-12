@@ -23,22 +23,24 @@ export default function Forecast({ location }: ForecastProps) {
     queryKey: ['forecastData'],
     queryFn: () => fetchForecastData(location),
     staleTime: 1000 * 60 * 30,
+    select: (data) => {
+      if (!data) return [];
+      return data.map((forecast: ForecastData) => ({
+        time: forecast.dt,
+        timeString: forecast.dt_txt,
+        weatherDescription: forecast.weather[0].description,
+        weatherIconUrl: `http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`,
+        minTemperature: forecast.main.temp_min,
+        maxTemperature: forecast.main.temp_max,
+      }));
+    },
   });
 
   if (forecastLoading) return <LoadingComponent message="Loading forecast..." />;
-  if (forecastError) return <ErrorComponent message="An unexpected error occurred. Please refresh the page and try again." />;
-
-  const forecastDataFiltered = forecastData.map((data: ForecastData) => ({
-    time: data.dt,
-    timeString: data.dt_txt,
-    weatherDescription: data.weather[0].description,
-    weatherIconUrl: `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
-    minTemperature: data.main.temp_min,
-    maxTemperature: data.main.temp_max,
-  }));
+  if (forecastError) return <ErrorComponent message="An unexpected error occurred" />;
 
   return (
-    <ForecastList forecastData={forecastDataFiltered}
+    <ForecastList forecastData={forecastData}
     />
   );
 }
