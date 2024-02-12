@@ -12,7 +12,7 @@ type WeatherProps = {
 
 export default function Weather({ location }: WeatherProps) {
     const { data: weatherData, isLoading: weatherLoading, isError: weatherError } = useQuery({
-        queryKey: ['weather'],
+        queryKey: ['weather', location],
         queryFn: () => fetchWeatherData(location),
         staleTime: 1000 * 60,
         select: (data) => {

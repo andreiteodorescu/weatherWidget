@@ -30,7 +30,7 @@ const transformForcast = (data: any) =>
 
 export default function Forecast({ location }: ForecastProps) {
   const { data: forecastData, isLoading: forecastLoading, isError: forecastError } = useQuery({
-    queryKey: ['forecastData'],
+    queryKey: ['forecastData', location],
     queryFn: () => fetchForecastData(location),
     staleTime: 1000 * 60 * 30,
     select: transformForcast,
