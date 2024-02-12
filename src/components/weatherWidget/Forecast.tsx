@@ -18,22 +18,22 @@ interface ForecastData {
   };
 }
 
+const transformForcast = (data: any) =>
+    data.map((forecast: ForecastData) => ({
+      time: forecast.dt,
+      timeString: forecast.dt_txt,
+      weatherDescription: forecast.weather[0].description,
+      weatherIconUrl: `http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`,
+      minTemperature: forecast.main.temp_min,
+      maxTemperature: forecast.main.temp_max,
+}));
+
 export default function Forecast({ location }: ForecastProps) {
   const { data: forecastData, isLoading: forecastLoading, isError: forecastError } = useQuery({
     queryKey: ['forecastData'],
     queryFn: () => fetchForecastData(location),
     staleTime: 1000 * 60 * 30,
-    select: (data) => {
-      if (!data) return [];
-      return data.map((forecast: ForecastData) => ({
-        time: forecast.dt,
-        timeString: forecast.dt_txt,
-        weatherDescription: forecast.weather[0].description,
-        weatherIconUrl: `http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`,
-        minTemperature: forecast.main.temp_min,
-        maxTemperature: forecast.main.temp_max,
-      }));
-    },
+    select: transformForcast,
   });
 
   if (forecastLoading) return <LoadingComponent message="Loading forecast..." />;

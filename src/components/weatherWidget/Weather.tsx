@@ -16,7 +16,6 @@ export default function Weather({ location }: WeatherProps) {
         queryFn: () => fetchWeatherData(location),
         staleTime: 1000 * 60,
         select: (data) => {
-            if (!data) return {};
             return {
                 name: data.name,
                 weather: data.weather,
@@ -43,24 +42,20 @@ export default function Weather({ location }: WeatherProps) {
 
     return (
         <>
-            {weatherData && (
-                <>
-                    <WeatherHeader locationName={weatherData.name} description={weatherData.weather[0].description} />
-                    <Today 
-                        temperature={weatherData.main?.temp} 
-                        minTemperature={weatherData.main?.temp_min} 
-                        maxTemperature={weatherData.main?.temp_max} 
-                        weatherIconUrl={`http://openweathermap.org/img/wn/${weatherData.weather?.[0]?.icon}@4x.png`}
-                        description={weatherData.weather?.[0]?.description} />
+            <WeatherHeader locationName={weatherData?.name ?? ''} description={weatherData?.weather[0]?.description ?? ''} />
+            <Today 
+                temperature={weatherData?.main.temp ?? 0} 
+                minTemperature={weatherData?.main.temp_min ?? 0} 
+                maxTemperature={weatherData?.main.temp_max ?? 0} 
+                weatherIconUrl={`http://openweathermap.org/img/wn/${weatherData?.weather[0].icon}@4x.png`}
+                description={weatherData?.weather[0].description ?? ''} />
 
-                    <Values 
-                        windSpeed={weatherData.wind?.speed}
-                        windDeg={weatherData.wind?.deg} 
-                        humidity={weatherData.main?.humidity}
-                        sunrise={weatherData.sys?.sunrise}
-                        sunset={weatherData.sys?.sunset} />
-                </>
-            )}
+            <Values 
+                windSpeed={weatherData?.wind.speed ?? 0}
+                windDeg={weatherData?.wind.deg ?? 0} 
+                humidity={weatherData?.main.humidity ?? 0}
+                sunrise={weatherData?.sys.sunrise ?? 0}
+                sunset={weatherData?.sys.sunset ?? 0} />
         </>
     );
 }
